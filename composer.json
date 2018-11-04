@@ -1,0 +1,16 @@
+{
+    "name": "webmacaj/data-to-sql",
+    "authors": [
+        {
+            "name": "Jakub Máčaj",
+            "email": "webmacaj@gmail.com"
+        }
+    ],
+    "description": "This package allows data files to be converted to SQL queries",
+    "require": {
+        "php": ">=7.0"
+    },
+    "autoload": {
+        "psr-4": {"Webmacaj\\DataToSql\\": "src/"}
+    }
+}
