@@ -34,4 +34,23 @@ class Converter
         }
     }
 
+    public function setHeaderOffset(int $row)
+    {
+        $this->resource->setHeaderOffset($row);
+    }
+
+    public function setColumns(array $columns)
+    {
+
+    }
+
+    public function getRow(int $row)
+    {
+        return $this->resource->getRow($row);
+    }
+
+    public function output(string $filename = null)
+    {
+
+    }
 }

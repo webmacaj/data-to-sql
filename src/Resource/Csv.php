@@ -17,7 +17,8 @@ class Csv implements ResourceInterface
 
     /** @var array */
     protected $allowedMimeTypes = [
-        'text/csv'
+        'text/csv',
+        'text/plain'
     ];
 
     /** @var resource */
@@ -68,14 +69,18 @@ class Csv implements ResourceInterface
      * Set header from specific offset.
      *
      * @param int $offset
+     *
+     * @return bool
      */
-    public function setHeaderOffset(int $offset = 0)
+    public function setHeaderOffset(int $offset = 0): bool
     {
-        if (!isset($this->data[$offset])) {
-            throw new \Exception('Data at offset position ' . $offset . ' is empty.');
+        if (!isset($this->data[$offset]) || $this->data[$offset]) {
+            return false;
         }
 
         $this->header = $this->data[$offset];
+
+        return (bool) count($this->header);
     }
 
     /**
@@ -89,9 +94,10 @@ class Csv implements ResourceInterface
             $this->header = $this->setHeaderOffset(0);
         }
 
-        while ($data = fgetcsv($this->resource)) {
-            $this->data[] = array_fill_keys($this->header, $data);
+        while ($data = \fgetcsv($this->resource)) {
+            $this->data[] = \array_fill_keys($this->header, $data);
         }
+        \fclose($this->resource);
 
         return $this->data;
     }
@@ -99,6 +105,10 @@ class Csv implements ResourceInterface
     public function getCount(): int
     {
 
+    }
+
+    public function getRow(int $row): array
+    {
     }
 
     /**
